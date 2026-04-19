@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Edge Case — When the checklist has been checked</title>
+  <meta name="description" content="A comic strip about building a trading AI. Every episode based on something that actually happened.">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--bg:#F5F0E8;--bg-card:#FFFDF8;--dark:#1A1710;--text:#1A1A1A;--muted:#6B6457;--border:#D4C9B0;--serif:Georgia,'Times New Roman',serif;--sans:'Helvetica Neue',Arial,sans-serif}
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--text);font-family:var(--serif);line-height:1.6;min-height:100vh;display:flex;flex-direction:column}
+    .hero{background:var(--dark);color:#F5F0E8;display:grid;grid-template-columns:1fr 420px;min-height:100vh;border-bottom:3px solid #F5F0E8}
+    @media(max-width:780px){.hero{grid-template-columns:1fr;min-height:auto}.hero-episode{border-left:none;border-top:3px solid #F5F0E8}}
+    .hero-left{padding:2.5rem 2rem;display:flex;flex-direction:column;justify-content:space-between}
+    .kicker{font-family:var(--sans);font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:#7A7060;margin-bottom:.5rem}
+    h1{font-size:clamp(2.2rem,4vw,3.2rem);font-weight:700;letter-spacing:-.02em;line-height:1;color:#F5F0E8;margin-bottom:.6rem}
+    .strap{font-style:italic;font-size:.88rem;color:#9A9080;line-height:1.5;max-width:340px}
+    .hero-nav{display:flex;gap:1.5rem;margin-top:1.5rem;font-family:var(--sans);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase}
+    .hero-nav a{color:#7A7060;text-decoration:none}
+    .hero-nav a:hover{color:#F5F0E8}
+    .characters{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:auto;padding-top:2rem}
+    .char{display:flex;gap:.75rem;align-items:flex-start}
+    .char img{width:60px;height:60px;border-radius:3px;object-fit:cover;object-position:top center;border:1.5px solid #3A3528;flex-shrink:0;background:#2A2720}
+    .char-name{font-size:.85rem;font-weight:700;margin-bottom:.1rem}
+    .char.ian .char-name{color:#6BAE6E}
+    .char.system .char-name{color:#C07070}
+    .char-role{font-family:var(--sans);font-size:.6rem;letter-spacing:.06em;text-transform:uppercase;color:#6A6050;margin-bottom:.3rem}
+    .char-desc{font-size:.76rem;color:#8A8070;line-height:1.45}
+    .hero-episode{border-left:3px solid #F5F0E8;display:flex;flex-direction:column}
+    .hero-episode a{flex:1;display:flex;flex-direction:column;text-decoration:none}
+    .hero-episode img{width:100%;flex:1;object-fit:cover;min-height:300px;display:block}
+    .ep-meta-bar{padding:1rem 1.25rem;border-top:1.5px solid #2E2B22;background:#14120E}
+    .ep-number{font-family:var(--sans);font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:#5A5040;margin-bottom:.25rem}
+    .ep-title{font-size:.95rem;font-weight:700;color:#F5F0E8;line-height:1.3;margin-bottom:.4rem}
+    .ep-caption{font-size:.78rem;font-style:italic;color:#7A7060;line-height:1.45}
+    .ep-link{display:inline-block;margin-top:.6rem;font-family:var(--sans);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:#6BAE6E;text-decoration:none}
+    .ep-link:hover{text-decoration:underline}.story{margin-top:2rem;padding-top:1.5rem;border-top:1px solid #2E2B22}.story p{font-size:.88rem;color:#8A8070;line-height:1.6;margin-bottom:.75rem;max-width:340px}.story p:last-child{margin-bottom:0}
+    .archive{max-width:860px;margin:0 auto;padding:2.5rem 1.5rem 4rem;flex:1}
+    .archive-label{font-family:var(--sans);font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem}
+    .archive-label::after{content:'';flex:1;height:1px;background:var(--border)}
+    .ep-row{display:grid;grid-template-columns:100px 1fr;gap:1rem;padding:1rem 0;border-bottom:1px solid var(--border);text-decoration:none;color:inherit;align-items:start}
+    .ep-row:hover .ep-row-title{text-decoration:underline}
+    .ep-row img{width:100%;aspect-ratio:2/1;object-fit:cover;border:1px solid var(--border);border-radius:2px;display:block}
+    .ep-row-num{font-family:var(--sans);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.2rem}
+    .ep-row-title{font-size:.95rem;font-weight:700;line-height:1.3;margin-bottom:.25rem}
+    .ep-row-caption{font-size:.82rem;font-style:italic;color:var(--muted);line-height:1.45}
+    footer{background:var(--dark);color:#5A5040;text-align:center;padding:1.25rem;font-family:var(--sans);font-size:.72rem;letter-spacing:.04em;border-top:2px solid #2E2B22}
+    footer a{color:#7A7060;text-decoration:none}
+  </style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-left">
+    <div>
+      <p class="kicker">A comic strip about building a trading AI</p>
+      <h1>The Edge Case</h1>
+      <p class="strap">Based on real events. The checklist was real. The instruments were not.</p><div class="story"><p>In 2025, a closet technologist decided to build an algorithmic trading company using AI agents. The plan was elegant.</p><p>What followed was not.</p><p>Every episode documents something that actually happened. The governance frameworks were real. The prop firm rules were real. The 48-hour DNS propagation window was, apparently, not something anyone had validated.</p></div>
+      <nav class="hero-nav">
+        <a href="#episodes">All episodes</a>
+        <a href="https://ipqi.co.uk">IPQI</a>
+      </nav>
+    </div>
+    <div class="characters">
+      <div class="char ian">
+        <img src="/images/ian-portrait.png" alt="Ian">
+        <div>
+          <div class="char-name">Ian</div>
+          <div class="char-role">The human · Hubris</div>
+          <div class="char-desc">Closet technologist. Builds governance frameworks at 2am. Checks the checklist checker.</div>
+        </div>
+      </div>
+      <div class="char system">
+        <img src="/images/system-portrait.png" alt="The System">
+        <div>
+          <div class="char-name">The System</div>
+          <div class="char-role">The machine · Reality</div>
+          <div class="char-desc">Does not hate Ian. Simply does not care. Status: REJECTION NOTICE.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-episode">
+    <a href="/episodes/ep01.html">
+      <img src="/images/ep01.png" alt="Episode 1 — Nobody checked whether the instruments existed">
+      <div class="ep-meta-bar">
+        <p class="ep-number">Latest — Episode 1</p>
+        <p class="ep-title">Nobody Checked Whether the Instruments Existed</p>
+        <p class="ep-caption">"Everything had been checked. The checklist had been checked. Ian had checked the checklist checker."</p>
+        <a class="ep-link" href="/episodes/ep01.html">Read episode →</a>
+      </div>
+    </a>
+  </div>
+</div>
+
+<div class="archive" id="episodes">
+  <p class="archive-label">All episodes</p>
+  <a class="ep-row" href="/episodes/ep01.html">
+    <img src="/images/ep01.png" alt="Episode 1">
+    <div>
+      <p class="ep-row-num">Episode 1</p>
+      <p class="ep-row-title">Nobody Checked Whether the Instruments Existed</p>
+      <p class="ep-row-caption">"Everything had been checked. The checklist had been checked. Ian had checked the checklist checker."</p>
+    </div>
+  </a>
+</div>
+
+<footer>
+  <p>© The Edge Case &nbsp;·&nbsp; <a href="https://ipqi.co.uk">IPQI Ltd</a> &nbsp;·&nbsp; Built on actual failures &nbsp;·&nbsp; No instruments were harmed (they simply did not exist)</p>
+</footer>
+
+</body>
+</html>
